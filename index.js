@@ -12,7 +12,7 @@ function Sage(subscriptionKey, auth) {
 /* Public Functions */
 Sage.prototype.query = function (httpMethod, url, parameters) {
   url = Sage.BASE_URL + url;
-  
+  let body = ''
   if(httpMethod == 'POST' || httpMethod == 'PUT') {
     body = utf8.encode(parameters.body)
     delete parameters.body
