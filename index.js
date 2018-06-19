@@ -28,7 +28,7 @@ Sage.prototype.query = function (httpMethod, url, parameters) {
         'Content-Type': 'application/json',
         'User-Agent': 'sage_za_node',
       },
-    form: parameters,
+    qs: parameters,
     body: body
   };
 
