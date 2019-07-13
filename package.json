@@ -1,6 +1,6 @@
 {
   "name": "sage-za-node",
-  "version": "0.1.3",
+  "version": "0.1.6",
   "description": "Node module for SageOne Accounting API for South Africa",
   "main": "index.js",
   "engines": {

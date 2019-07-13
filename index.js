@@ -8,6 +8,15 @@ function Sage(subscriptionKey, auth) {
   this.auth = auth;
 }
 
+function IsJsonString(str) {
+  try {
+      JSON.parse(str);
+  } catch (e) {
+      return false;
+  }
+  return true;
+}
+
 /* Public Functions */
 Sage.prototype.query = function (httpMethod, url, parameters, body) {
 
@@ -18,22 +27,29 @@ Sage.prototype.query = function (httpMethod, url, parameters, body) {
   var options = {
     method: httpMethod,
     url: url,
+    encoding: null,
     headers: {
         'Authorization': 'Basic ' + this.auth,
         'Content-Type': 'application/json',
         'User-Agent': 'sage_za_node',
       },
     qs: parameters,
+    gzip: true,
     body: JSON.stringify(body)
   };
 
   return new Promise((resolve, reject) => {
     request(options, function (error, response, body) {
       if (response.statusCode == 200 || response.statusCode == 201) {
-        resolve(JSON.parse(body));
+        if (IsJsonString(body)) {
+          resolve(JSON.parse(body));
+        } else {
+          resolve(body)
+        }
       } else {
+        //console.info(body)
         if (!error) error = { message: 'Error Occured', statusCode: response.statusCode }      
-        reject(error)
+        reject(body)
       }
     });
   })
