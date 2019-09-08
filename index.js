@@ -47,9 +47,8 @@ Sage.prototype.query = function (httpMethod, url, parameters, body) {
           resolve(body)
         }
       } else {
-        //console.info(body)
-        if (!error) error = { message: 'Error Occured', statusCode: response.statusCode }      
-        reject(body)
+        if (!error) error = { message: `Error Occured: ${body.toString()}`, statusCode: response.statusCode }      
+        reject(error)
       }
     });
   })
